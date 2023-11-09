@@ -12,6 +12,7 @@ import { parseDbDataToExercises } from "../utils/parseDbDataToExercises";
 import { Image } from "expo-image";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { useAppContext } from "../context/useAppContext";
+import SplitSummary from "../components/SplitSummary";
 
 const DashboardScreen = () => {
   const nav = useNavigation<NativeStackNavigationProp<any>>();
@@ -39,7 +40,7 @@ const DashboardScreen = () => {
   }, [currentUser, currentDate]);
 
   const onPressNewExercise = () => {
-    nav.push("AllExercises");
+    nav.push("Splits");
   };
   const handleChangeDatepicker = (event: unknown, selectedDate?: Date) => {
     setIsDatePickerVisible(false);
@@ -57,16 +58,11 @@ const DashboardScreen = () => {
 
   const handleNavigateToExercise = (
     exerciseName: string,
-    exerciseCategory: string,
-    currentIndex: number,
-    dayExerciseCount: number
+    exerciseCategory: string
   ) => {
-    console.log("pressed", { currentIndex, dayExerciseCount });
     nav.push("Exercise", {
       exerciseName,
       exerciseCategory,
-      currentIndex,
-      dayExerciseCount,
     });
   };
 
@@ -86,77 +82,26 @@ const DashboardScreen = () => {
         excerciseName as keyof typeof dayExercises
       ] as ExerciseSet[],
     }));
-  // console.log("dashboard exercises", exercises.length);
+
   const currentDateFormatted = formatDate(currentDate);
 
   return (
     <View className="flex bg-slate-50 flex-1 w-full rounded-lg pb-4">
-      <View className="bg-black flex flex-row justify-between px-4 items-center border-b-2 border-sky-300">
-        <Image
-          style={{ width: 100, height: 75 }}
-          source={require("../../assets/logogainz.png")}
-        />
-        <View className="bg-black">
-          <Pressable onPress={() => setIsDatePickerVisible(true)}>
-            <Ionicons name="calendar-outline" size={25} color="white" />
-          </Pressable>
-        </View>
-        <View className="bg-black">
-          <Pressable onPress={onPressNewExercise}>
-            <Ionicons name="add" size={25} color="white" />
-          </Pressable>
-        </View>
-        {/* <View className="bg-black">
-          <Ionicons name="menu" size={25} color="white" />
-        </View> */}
+      <View className="ml-6">
+        <Text className="text-black text-lg font-semibold pb-2">
+          Curent Split
+        </Text>
       </View>
-      {!isDatePickerVisible && (
-        <View className="flex flex-row align-middle justify-between items-center py-4">
-          <Pressable onPress={handleNavigateDate("backward")}>
-            <Ionicons name="chevron-back" size={25} color="black" />
-          </Pressable>
-          <Text className="text-black text-lg font-semibold pb-2">
-            {currentDateFormatted}
-          </Text>
-          <Pressable onPress={handleNavigateDate("forward")}>
-            <Ionicons name="chevron-forward" size={25} color="black" />
-          </Pressable>
-        </View>
-      )}
-
-      {isDatePickerVisible && (
-        <View className="h-full">
-          <Pressable onPress={() => setIsDatePickerVisible(true)}></Pressable>
-
-          <View>
-            <DateTimePicker
-              testID="dateTimePicker"
-              value={date ? new Date(date) : new Date()}
-              mode="date"
-              onChange={handleChangeDatepicker}
-              display="inline"
-            />
-            <Pressable onPress={() => setIsDatePickerVisible(false)}>
-              <Text>Done</Text>
-            </Pressable>
-          </View>
-        </View>
-      )}
-      <FlatList
-        data={exercises}
-        renderItem={({ item, index }) => (
-          <ExerciseSummary
-            exerciseName={item.exerciseName}
-            exerciseSets={item.exerciseSets}
-            onPress={handleNavigateToExercise}
-            currentIndex={index || 0}
-            dayExerciseCount={exercises?.length || 0}
-          />
-        )}
-        contentContainerStyle={{
-          paddingBottom: 20,
-        }}
-        keyExtractor={(item, index) => item.exerciseName}
+      <SplitSummary
+        splitName="4 Day ul pp"
+        workouts={["Lower", "Upper", "Pull", "Push"]}
+        cycles={6}
+        toDeload={2}
+        lastWorkout={"Push"}
+        nextWorkout={"Lower"}
+        workoutGoal="Progressive Overload"
+        overloadAmount={10}
+        onPress={handleNavigateToExercise}
       />
     </View>
   );

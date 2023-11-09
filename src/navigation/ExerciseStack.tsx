@@ -15,7 +15,12 @@ export type RootStackParamList = {
   AllExercises: undefined;
   //   Login: undefined;
   //   Modal: undefined;
-  Exercise: { exerciseName: string; exerciseCategory: string };
+  Exercise: {
+    exerciseName: string;
+    exerciseCategory: string;
+    currentIndex: number;
+    dayExerciseCount: number;
+  };
   //   Contacts: Partial<any> | undefined;
   //   Profile: undefined;
 };

@@ -1,8 +1,8 @@
 {
   "expo": {
     "name": "gainz",
-    "slug": "gainz",
-    "version": "1.0.0",
+    "slug": "gainzworkouts",
+    "version": "1.1.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -42,6 +42,12 @@
           }
         }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "ee411716-5707-4c0d-b467-ecbbf5e59a31"
+      }
+    },
+    "owner": "srlyttle"
   }
 }

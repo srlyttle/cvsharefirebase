@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>697181528758-cjfcq2t04l0ue4ha18d1pu5fvab9s1jp.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.697181528758-cjfcq2t04l0ue4ha18d1pu5fvab9s1jp</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBNCqjKwV61f8mAfZGRT0I7N6lHTWziKhY</string>
+	<key>GCM_SENDER_ID</key>
+	<string>697181528758</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.digitalpulse.gainz</string>
+	<key>PROJECT_ID</key>
+	<string>gainzworkouts-c289a</string>
+	<key>STORAGE_BUCKET</key>
+	<string>gainzworkouts-c289a.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:697181528758:ios:952a87b5ecbbf933e2fc17</string>
+	<key>DATABASE_URL</key>
+	<string>https://gainzworkouts-c289a-default-rtdb.europe-west1.firebasedatabase.app</string>
+</dict>
+</plist>

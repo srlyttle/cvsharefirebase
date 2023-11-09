@@ -7,10 +7,23 @@ import { ExerciseSet } from "../../types";
 interface Props {
   exerciseName: string;
   exerciseSets: ExerciseSet[];
-  onPress: (exerciseName: string, exerciseCategory: string) => void;
+  onPress: (
+    exerciseName: string,
+    exerciseCategory: string,
+    currentIndex: number,
+    dayExerciseCount: number
+  ) => void;
+  currentIndex: number;
+  dayExerciseCount: number;
 }
 
-const ExerciseSummary = ({ exerciseName, exerciseSets, onPress }: Props) => {
+const ExerciseSummary = ({
+  exerciseName,
+  exerciseSets,
+  onPress,
+  currentIndex,
+  dayExerciseCount,
+}: Props) => {
   return (
     <View className="m-4  block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
       <View className={`flex flex-row border-b-[1px] border-sky-300`}>
@@ -23,7 +36,16 @@ const ExerciseSummary = ({ exerciseName, exerciseSets, onPress }: Props) => {
         <FlatList
           data={exerciseSets}
           renderItem={({ item }) => (
-            <Pressable onPress={() => onPress(exerciseName, exerciseName)}>
+            <Pressable
+              onPress={() =>
+                onPress(
+                  exerciseName,
+                  exerciseName,
+                  currentIndex,
+                  dayExerciseCount
+                )
+              }
+            >
               {item && <SetRow exerciseSet={item} />}
             </Pressable>
           )}

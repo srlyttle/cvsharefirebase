@@ -3,7 +3,7 @@ android/
 ios/
 .expo/
 google-services.json
-GoogleService-Info.plist
+# GoogleService-Info.plist
 dist/
 npm-debug.*
 *.jks

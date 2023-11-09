@@ -8,6 +8,7 @@ const Tab = createBottomTabNavigator();
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ExerciseStackNavigator } from "./ExerciseStack";
+import SplitsStack from "./SplitsStack";
 
 const MainTabNavigator = () => {
   return (
@@ -44,7 +45,13 @@ const MainTabNavigator = () => {
             headerShown: false,
           }}
         />
-
+        <Tab.Screen
+          name="Splits"
+          component={SplitsStack}
+          options={{
+            headerShown: false,
+          }}
+        />
         <Tab.Screen
           name="Settings"
           component={SettingsStack}

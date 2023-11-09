@@ -60,7 +60,6 @@ const AuthScreen = () => {
       }
     } catch (error: any) {
       // console.log("error 1", error);
-      console.log("error", error.code);
 
       setAuthError(mapAuthCodeToMessage(error?.code));
     }
