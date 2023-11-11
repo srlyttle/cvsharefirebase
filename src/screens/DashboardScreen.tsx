@@ -18,7 +18,7 @@ const DashboardScreen = () => {
 
   const dateFormat = "dd-MM-yyyy";
   const { currentUser } = auth();
-  const { setCurrentDate, currentDate } = useAppContext();
+  const { setCurrentDate, currentDate, setDayExerciseData } = useAppContext();
 
   const [date, setDate] = React.useState(new Date()); //datepicker local state
   const [isDatePickerVisible, setIsDatePickerVisible] = React.useState(false);
@@ -39,6 +39,18 @@ const DashboardScreen = () => {
   }, [currentUser, currentDate]);
 
   const onPressNewExercise = () => {
+    const count =
+      dayExercises &&
+      Object.keys(dayExercises).map((excerciseName) => ({
+        exerciseName: excerciseName,
+        exerciseSets: dayExercises[
+          excerciseName as keyof typeof dayExercises
+        ] as ExerciseSet[],
+      }))?.length;
+    setDayExerciseData({
+      exerciseCount: count,
+      currentIndex: count + 1,
+    });
     nav.push("AllExercises");
   };
   const handleChangeDatepicker = (event: unknown, selectedDate?: Date) => {
@@ -61,7 +73,7 @@ const DashboardScreen = () => {
     currentIndex: number,
     dayExerciseCount: number
   ) => {
-    console.log("pressed", { currentIndex, dayExerciseCount });
+    setDayExerciseData({ exerciseCount: dayExerciseCount, currentIndex });
     nav.push("Exercise", {
       exerciseName,
       exerciseCategory,
@@ -80,13 +92,21 @@ const DashboardScreen = () => {
 
   const exercises =
     dayExercises &&
-    Object.keys(dayExercises).map((excerciseName) => ({
-      exerciseName: excerciseName,
-      exerciseSets: dayExercises[
-        excerciseName as keyof typeof dayExercises
-      ] as ExerciseSet[],
-    }));
-  // console.log("dashboard exercises", exercises.length);
+    Object.keys(dayExercises)
+      .map((excerciseName) => ({
+        exerciseName: excerciseName,
+        order:
+          (
+            dayExercises[
+              excerciseName as keyof typeof dayExercises
+            ] as ExerciseSet[]
+          )?.[0].exerciseOrder || 0,
+        exerciseSets: dayExercises[
+          excerciseName as keyof typeof dayExercises
+        ] as ExerciseSet[],
+      }))
+      .sort((a, b) => a.order - b.order);
+
   const currentDateFormatted = formatDate(currentDate);
 
   return (

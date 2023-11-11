@@ -8,6 +8,7 @@ export const parseDbDataToExercises = (
         order: number;
         reps: string;
         weight: string;
+        exerciseOrder: number;
       }
     >
   >
@@ -18,6 +19,7 @@ export const parseDbDataToExercises = (
       const setIds = Object.keys(exercisesForDay[exerciseName]);
       const parsedSets = setIds.map((setId) => {
         const rawSet = exercisesForDay[exerciseName][setId];
+
         return {
           id: setId,
           isPersonalBest: false,
@@ -25,6 +27,7 @@ export const parseDbDataToExercises = (
           weightUnit: "kgs",
           reps: rawSet.reps,
           order: rawSet.order,
+          exerciseOrder: rawSet.exerciseOrder,
         };
       });
 

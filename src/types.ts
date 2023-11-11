@@ -12,4 +12,5 @@ export interface ExerciseSet {
   distanceUnit?: string;
   time?: string;
   id: string;
+  exerciseOrder?: number;
 }

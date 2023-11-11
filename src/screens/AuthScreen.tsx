@@ -27,9 +27,7 @@ const AuthScreen = () => {
         .set({ name });
 
       nav.replace("Main");
-    } catch (error) {
-      // console.log("error", (error as any[])[1]);
-    }
+    } catch (error) {}
   };
 
   const signExistingUserIn = async ({ email, password }: SignInUpValues) => {
@@ -41,8 +39,6 @@ const AuthScreen = () => {
         nav.replace("Main");
       }
     } catch (error: any) {
-      console.log("error", error.code);
-
       setAuthError(mapAuthCodeToMessage(error?.code));
     }
   };
@@ -59,8 +55,6 @@ const AuthScreen = () => {
         createUserProfile(response, formData.name);
       }
     } catch (error: any) {
-      // console.log("error 1", error);
-
       setAuthError(mapAuthCodeToMessage(error?.code));
     }
   };

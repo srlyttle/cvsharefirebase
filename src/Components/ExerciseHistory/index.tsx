@@ -65,7 +65,6 @@ export const ExerciseHistory = ({ exerciseName, exerciseCategory }: Props) => {
 
     setFormattedHistory(newFormattedHistory);
   }, [summary, exerciseName]);
-  // console.log("simon", formattedHistory);
 
   const allExerciseDates = Object.keys(formattedHistory);
   return (

@@ -37,9 +37,10 @@ export const ExerciseTrack = ({
   currentIndex,
   dayExerciseCount,
 }: Props) => {
-  console.log("traack dATA", { currentIndex, dayExerciseCount });
   const { currentUser } = auth();
-  const { setCurrentDate, currentDate } = useAppContext();
+  const { setCurrentDate, currentDate, setDayExerciseData, dayExerciseData } =
+    useAppContext();
+
   //   const { exerciseName, exerciseCategory } = route.params;
   const [dayExercises, setDayExercises] = React.useState({});
   const [weightValue, setWeightValue] = React.useState("");
@@ -138,6 +139,9 @@ export const ExerciseTrack = ({
     )?.find((set) => set?.id === selectedRowId);
 
     const setOrder = setItem ? setItem?.order : (newdata as any[])?.length || 0;
+    // const newExerciseOrder = dayExerciseCount + 1;
+    // const updateExerciseOrder = currentIndex + 1;
+
     if (selectedRowId && rowSelected) {
       await db()
         .ref(
@@ -152,7 +156,7 @@ export const ExerciseTrack = ({
             weightUnit: "kgs",
             exercise: exerciseName,
             order: setOrder,
-            // exerciseOrder: 0,
+            exerciseOrder: dayExerciseData?.currentIndex,
           },
         });
     } else {
@@ -170,7 +174,9 @@ export const ExerciseTrack = ({
           category: exerciseCategory,
           weightUnit: "kgs",
           exercise: exerciseName,
-          // exerciseOrder: 2,
+          exerciseOrder: dayExerciseData?.exerciseCount
+            ? dayExerciseData?.exerciseCount + 1
+            : 1,
         });
     }
   };

@@ -32,7 +32,7 @@ const ExerciseScreen = ({ route }: Props) => {
   const { setCurrentDate, currentDate } = useAppContext();
   const { exerciseName, exerciseCategory, currentIndex, dayExerciseCount } =
     route.params;
-  console.log("indexes ExerciseScreen ", currentIndex, dayExerciseCount);
+
   const [dayExercises, setDayExercises] = React.useState<DayExercises>({});
   const [weightValue, setWeightValue] = React.useState<string>("");
   const [repValue, setRepValue] = React.useState<string>("");
