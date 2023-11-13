@@ -76,11 +76,11 @@ const ExerciseScreen = ({ route }: Props) => {
       );
     } else if (route.key === "history") {
       return (
-        // <ExerciseHistory
-        //   exerciseName={exerciseName}
-        //   exerciseCategory={exerciseCategory}
-        // />
-        <View />
+        <ExerciseHistory
+          exerciseName={exerciseName}
+          exerciseCategory={exerciseCategory}
+        />
+        // <View />
       );
     }
 

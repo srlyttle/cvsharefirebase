@@ -1,5 +1,5 @@
 import * as React from "react";
-import { View, Text, useWindowDimensions } from "react-native";
+import { View, Text, useWindowDimensions, FlatList } from "react-native";
 import auth from "@react-native-firebase/auth";
 import db from "@react-native-firebase/database";
 
@@ -10,7 +10,6 @@ interface Props {
   exerciseCategory: string;
 }
 
-type DaySummary = Record<string, Exercise[]>;
 interface Exercise {
   id: string;
   isPersonalBest: false;
@@ -21,12 +20,11 @@ interface Exercise {
 }
 
 export type Day = Record<string, Record<string, Partial<Exercise>[]>>;
-export const ExerciseHistory = ({ exerciseName, exerciseCategory }: Props) => {
+export const ExerciseHistory = ({ exerciseName }: Props) => {
   const { currentUser } = auth();
   const { setCurrentDate } = useAppContext();
   const [summary, setSummary] = React.useState<Day>({});
   const [formattedHistory, setFormattedHistory] = React.useState<any>({});
-  const layout = useWindowDimensions();
 
   React.useEffect(() => {
     const onValueChange = db()
@@ -35,7 +33,6 @@ export const ExerciseHistory = ({ exerciseName, exerciseCategory }: Props) => {
         setSummary(snapshot.val());
       });
 
-    // Stop listening for updates when no longer required
     return () =>
       db()
         .ref(`/users/${currentUser?.uid}/workouts`)
@@ -66,41 +63,43 @@ export const ExerciseHistory = ({ exerciseName, exerciseCategory }: Props) => {
     setFormattedHistory(newFormattedHistory);
   }, [summary, exerciseName]);
 
-  const allExerciseDates = Object.keys(formattedHistory);
+  const exerciseDates = Object.keys(formattedHistory);
+
   return (
     <View className="flex bg-slate-50 flex-1 w-full rounded-lg pb-4 h-24">
-      {Object.keys(formattedHistory).map((exerciseDate) => (
-        <>
-          <View className="flex mx-4 pt-2 border-b-2 border-sky-400">
-            <Text className="text-lg font-semibold text-gray-600">
-              {exerciseDate}{" "}
-            </Text>
-          </View>
-          {formattedHistory[exerciseDate].map(
-            (set: {
-              order: number;
-              reps: string;
-              weight: string;
-              weightUnit: string;
-            }) => (
-              <View className="flex flex-row-reverse ml-4 items-center ">
-                <View>
-                  <Text className="font-light">reps </Text>
+      <FlatList
+        data={exerciseDates}
+        keyExtractor={(item, index) => `${exerciseName}${item}`}
+        renderItem={({ item: exerciseDate }) => (
+          <>
+            <View className="flex mx-4 pt-2 border-b-2 border-sky-400">
+              <Text className="text-lg font-semibold text-gray-600">
+                {exerciseDate}{" "}
+              </Text>
+            </View>
+            <FlatList
+              data={formattedHistory[exerciseDate]}
+              keyExtractor={(item, index) => `${exerciseDate}${index}`}
+              renderItem={({ item: set }) => (
+                <View className="flex flex-row-reverse ml-4 items-center ">
+                  <View>
+                    <Text className="font-light">reps </Text>
+                  </View>
+                  <View>
+                    <Text className="text-lg">{set.reps} </Text>
+                  </View>
+                  <View>
+                    <Text className="font-light">{set.weightUnit} </Text>
+                  </View>
+                  <View>
+                    <Text className="text-lg">{set.weight} </Text>
+                  </View>
                 </View>
-                <View>
-                  <Text className="text-lg">{set.reps} </Text>
-                </View>
-                <View>
-                  <Text className="font-light">{set.weightUnit} </Text>
-                </View>
-                <View>
-                  <Text className="text-lg">{set.weight} </Text>
-                </View>
-              </View>
-            )
-          )}
-        </>
-      ))}
+              )}
+            />
+          </>
+        )}
+      />
     </View>
   );
 };
